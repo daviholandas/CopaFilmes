@@ -58,82 +58,7 @@ namespace CopaFilmes.Tests
             Assert.Equal(filmeIndice4, filmeChaveado4);
             Assert.Equal(filmeIndice5, filmeChaveado5);
         }
-
-        [Fact(DisplayName = "TESTE DAS QUARTAS DE FINAIS.")]
-        public async void Competicao_DisputaDasQuartas_DeveRetornarTamanho2()
-        {
-            //Arrange
-            var competicao = await _filmeTestsFixture.GerarCompeticao();
-            var chaveamento = competicao.CriarChaveamento();
-            //Act
-
-            var segundoChaveamento = competicao.DisputarQuartas(chaveamento);
-
-            //Assert
-            Assert.Equal(2, segundoChaveamento.Count());
-        }
-
-        [Fact(DisplayName ="TESTE DAS QUARTAS RETORNANDO OS FILMES DA FINAL.")]
-        public async void Competicao_DisputarDasQuartas_DeveRetornarOsTimesCertos()
-        {
-            /*
-             Filmes que devem ser retornados Quartas.
-                    • "Vingadores: Guerra Infinita"
-                    • "Thor: Ragnarok"
-                    • "Os Incríveis 2"
-                    • "Jurassic World: Reino Ameaçado"
-             
-             */
-            //Arrange
-            
-            var competicao = await _filmeTestsFixture.GerarCompeticao();
-            var chaveameto = competicao.CriarChaveamento();
-            var quartas = competicao.DisputarQuartas(chaveameto);
-
-            var filmeIndice1 = new Filme("tt4154756", "Vingadores: Guerra Infinita", 2018, 8.8);
-            var filmeIndice4 = new Filme("tt3606756", "Os Incríveis 2", 2018, 8.5);
-
-            //Act
-            var competidor1 = quartas[1].Competidor1;
-            var competidor3 = quartas[2].Competidor1;
-            //Assert
-            Assert.Equal(filmeIndice1, competidor1);
-            Assert.Equal(filmeIndice4,competidor3);
-        }
-
-        [Fact]
-        public async void Competicao_Final_DeveRetornarUmaListaCom2Filmes()
-        {
-            //Arrange
-            var competicao = await _filmeTestsFixture.GerarCompeticao();
-            var chaveameto = competicao.CriarChaveamento();
-            var quartas = competicao.DisputarQuartas(chaveameto);
-
-            //Act
-            var competidoresFinal = competicao.DisputarFinal(quartas).Count();
-            //Assert
-            Assert.Equal(2, competidoresFinal);
-        }
-
-        [Fact(DisplayName = "TESTE RESULTADO DOS FINALISTAS.")]
-        public async void Competicao_Final_DeveRetornarFilmesCertosFinal()
-        {
-            //Arrange 
-            var competicao = await _filmeTestsFixture.GerarCompeticao();
-            var chaveameto = competicao.CriarChaveamento();
-            var quartas = competicao.DisputarQuartas(chaveameto);
-            var final = competicao.DisputarFinal(quartas);
-
-            var filmeFinalista1 = new Filme("tt4154756", "Vingadores: Guerra Infinita", 2018, 8.8);
-            var filmeFinalista2 = new Filme("tt3606756", "Os Incríveis 2", 2018, 8.5);
-
-            //Act
-            var finalista1 = final[0];
-            var finalista2 = final[1];
-            //Assert
-            Assert.Equal(filmeFinalista1,finalista1);
-            Assert.Equal(filmeFinalista2, finalista2);
-        }
+        
 
         [Fact(DisplayName = "TESTE RESULTADO FINAL COMPETIÇÃO.")]
         public async void Competicao_CriarCompeticao_VaiRetornarCampeaoEVice()
@@ -143,9 +68,10 @@ namespace CopaFilmes.Tests
             var campeao = new Filme("tt4154756", "Vingadores: Guerra Infinita", 2018, 8.8);
             var vice = new Filme("tt3606756", "Os Incríveis 2", 2018, 8.5);
             //Act
-            var resultadoCompeticao = competicao.CriarCompeticao();
-            var resultadoCampeao = resultadoCompeticao["campeao"];
-            var resultadoVice = resultadoCompeticao["vice"];
+            competicao.DisputarCompeticao();
+            var resultado = competicao.ObterCampeaoEVice();
+            var resultadoCampeao = resultado["campeao"];
+            var resultadoVice = resultado["vice"];
 
             //Assert
 

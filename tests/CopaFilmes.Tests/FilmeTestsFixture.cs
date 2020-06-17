@@ -14,6 +14,7 @@ namespace CopaFilmes.Tests
 {
     [CollectionDefinition(nameof(FilmeFixtureCollection))]
     public class FilmeFixtureCollection : ICollectionFixture<FilmeTestsFixture>{}
+    
     public class FilmeTestsFixture
     {
         public async Task<IEnumerable<Filme>> GerarColecaoDeFilmes(int quantidade)
@@ -37,12 +38,6 @@ namespace CopaFilmes.Tests
 
             return competicao;
         }
-
-        public async Task<IDictionary<int, Partida>> GerarChaveamento()
-        {
-            var competicao = await GerarCompeticao();
-
-            return  competicao.CriarChaveamento();
-        }
+        
     }
 }
