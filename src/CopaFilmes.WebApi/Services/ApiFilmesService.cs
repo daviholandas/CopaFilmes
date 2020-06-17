@@ -18,10 +18,12 @@ namespace CopaFilmes.WebApi.Services
         private ILogger<HttpClient> _logger;
 
         public ApiFilmesService(HttpClient httpClient,
-            IApiExternaConfig apiExternaConfig)
+            IApiExternaConfig apiExternaConfig,
+            ILogger<HttpClient> logger)
         {
             _httpClient = httpClient;
             _apiExternaConfig = apiExternaConfig;
+            _logger = logger;
         }
         public async Task<IEnumerable<FilmeDto>> ObterFilmes()
         {

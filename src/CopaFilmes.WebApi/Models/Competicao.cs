@@ -2,66 +2,71 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CopaFilmes.WebApi.DomainObjects;
 
 namespace CopaFilmes.WebApi.Models
 {
     public class Competicao
     {
+        private IDictionary<int, Partida> _chaveamento =  new Dictionary<int, Partida>();
+        private IDictionary<int, Partida> _chaveamentoQuartas = new Dictionary<int, Partida>();
+        private IList<Filme> _resultadoFinal = new List<Filme>();
         public IEnumerable<Filme> Competidores { get; private set; }
-        
         public Competicao(IEnumerable<Filme> competidores)
         {
             Competidores = competidores;
         }
+        
         private Competicao(){}
-
-
-        public IDictionary<int, Partida> CriarChaveamento()
+        
+        public  IDictionary<int, Partida> CriarChaveamento()
         {
             var key = 1;
-            var tamanho = Competidores.Count();
-            var chaveamento = new Dictionary<int, Partida>(){};
-            for (int i = 0; i < 4 ; i++)
+            var quantidadeCompetidores = Competidores.Count();
+            var quantidadeDeChaves = Competidores.Count() / 2;
+            
+            for (int i = 0; i < quantidadeDeChaves ; i++)
             {
-                chaveamento.Add(key++, new Partida(Competidores.ElementAt(i), Competidores.ElementAt(--tamanho)));
+               _chaveamento.Add(key++, new Partida(Competidores.ElementAt(i), Competidores.ElementAt(--quantidadeCompetidores)));
             }
-
-            return chaveamento;
+            
+            return _chaveamento;
         }
 
-        public IDictionary<int, Partida> DisputarQuartas(IDictionary<int, Partida> chavemanto)
+        public void DisputarCompeticao()
         {
+            //Caso o método seja chamado sem antes o método CriarChavemento não tenha sido invocado.
+            if (_chaveamento.Count() != 8)
+                CriarChaveamento();
             
-            var quartas = new Dictionary<int, Partida>(){};
+            DisputarQuartas();
+            DisputarFinal();
+        }
+        private void DisputarQuartas()
+        {
             var key = 1;
-            for (int i = 1; i <= chavemanto.Count(); i+=2)
-            {
-                quartas.Add(key++, new Partida(chavemanto[i].EscolherVencedor(), chavemanto[i+1].EscolherVencedor()));
-            }
-
-            return quartas;
-        }
-
-        public IList<Filme> DisputarFinal(IDictionary<int, Partida> quartas)
-        {
-            var final = new List<Filme>(){};
-            for (int i = 0; i < quartas.Count(); i++)
-            {
-                final.Add(quartas[i + 1].EscolherVencedor());
-            }
-
-            return final;
-        }
-
-        public IDictionary<string, Filme> CriarCompeticao()
-        {
-            var chaveamento = CriarChaveamento();
-            var quartas = DisputarQuartas(chaveamento);
-            var final = DisputarFinal(quartas);
-
             
-            var campeao = new Partida(final[0], final[1]).EscolherVencedor();
-            var vice = final.First(f => f != campeao);
+            for (int i = 1; i <= _chaveamento.Count(); i+=2)
+            {
+                _chaveamentoQuartas.Add(key++, new Partida(_chaveamento[i].EscolherVencedor(), _chaveamento[i+1].EscolherVencedor()));
+            }
+            
+        }
+        
+        private void DisputarFinal()
+        {
+            
+            for (int i = 0; i < _chaveamentoQuartas.Count(); i++)
+            {
+                _resultadoFinal.Add(_chaveamentoQuartas[i + 1].EscolherVencedor());
+            }
+            
+        }
+
+        public IDictionary<string, Filme> ObterCampeaoEVice()
+        {
+            var campeao = new Partida(_resultadoFinal[0], _resultadoFinal[1]).EscolherVencedor();
+            var vice = _resultadoFinal.First(f => f != campeao);
             
             return new Dictionary<string, Filme>()
             {

@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 namespace CopaFilmes.WebApi
 {
@@ -45,11 +46,31 @@ namespace CopaFilmes.WebApi
                 options.DefaultApiVersion = new ApiVersion(1, 0);
                 options.ReportApiVersions = true;
             });
-
-            services.AddVersionedApiExplorer(options =>
+            
+            //Serviços de dominio
+            services.AddScoped<ICompeticaoService, CompeticaoService>();
+            
+            //Cors
+            services.AddCors(options =>
             {
-                options.GroupNameFormat = "'v'VVv";
-                options.SubstituteApiVersionInUrl = true;
+                options.AddDefaultPolicy(
+                    builder =>
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod());
+            });
+            
+            //Documentação
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Api Copa Filmes",
+                    Version = "v1",
+                    Description = "Api criadada para a copa do mundo de filmes",
+                    Contact = new OpenApiContact{Name = "Davi Holanda", Email = "daviholandas@gmail.com"}
+                });
             });
 
         }
@@ -57,6 +78,7 @@ namespace CopaFilmes.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -71,6 +93,12 @@ namespace CopaFilmes.WebApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Copa Filmes");
             });
         }
     }

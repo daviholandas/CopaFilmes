@@ -10,7 +10,7 @@ namespace CopaFilmes.WebApi.V1.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v1/[controller]")]
     public class FilmesController : ControllerBase
     {
         private readonly IApiFilmesService _apiFilmesService;
