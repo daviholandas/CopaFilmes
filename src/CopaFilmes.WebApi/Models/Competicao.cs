@@ -8,6 +8,7 @@ namespace CopaFilmes.WebApi.Models
 {
     public class Competicao
     {
+        private const int NUMERO_COMPETIDORES = 8;
         private IDictionary<int, Partida> _chaveamento =  new Dictionary<int, Partida>();
         private IDictionary<int, Partida> _chaveamentoQuartas = new Dictionary<int, Partida>();
         private IList<Filme> _resultadoFinal = new List<Filme>();
@@ -19,29 +20,27 @@ namespace CopaFilmes.WebApi.Models
         
         private Competicao(){}
         
-        public  IDictionary<int, Partida> CriarChaveamento()
+        private IDictionary<int, Partida> CriarChaveamento()
         {
             var key = 1;
-            var quantidadeCompetidores = Competidores.Count();
+            var indexInicial = NUMERO_COMPETIDORES;
             var quantidadeDeChaves = Competidores.Count() / 2;
             
             for (int i = 0; i < quantidadeDeChaves ; i++)
             {
-               _chaveamento.Add(key++, new Partida(Competidores.ElementAt(i), Competidores.ElementAt(--quantidadeCompetidores)));
+               _chaveamento.Add(key++, new Partida(Competidores.ElementAt(i), Competidores.ElementAt(--indexInicial)));
             }
-            
+
             return _chaveamento;
         }
 
         public void DisputarCompeticao()
         {
-            //Caso o método seja chamado sem antes o método CriarChavemento não tenha sido invocado.
-            if (_chaveamento.Count() != 8)
-                CriarChaveamento();
-            
+            CriarChaveamento();
             DisputarQuartas();
             DisputarFinal();
         }
+        
         private void DisputarQuartas()
         {
             var key = 1;
@@ -50,7 +49,6 @@ namespace CopaFilmes.WebApi.Models
             {
                 _chaveamentoQuartas.Add(key++, new Partida(_chaveamento[i].EscolherVencedor(), _chaveamento[i+1].EscolherVencedor()));
             }
-            
         }
         
         private void DisputarFinal()
@@ -60,8 +58,10 @@ namespace CopaFilmes.WebApi.Models
             {
                 _resultadoFinal.Add(_chaveamentoQuartas[i + 1].EscolherVencedor());
             }
-            
         }
+
+        public IDictionary<int, Partida> ObterChaveamento()
+            => CriarChaveamento();
 
         public IDictionary<string, Filme> ObterCampeaoEVice()
         {

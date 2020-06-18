@@ -25,7 +25,7 @@ namespace CopaFilmes.Tests
 
             var competicao = new Competicao(competidores);
             //Act
-            var chaveamento = competicao.CriarChaveamento();
+            var chaveamento = competicao.ObterChaveamento();
             //Assert
             Assert.Equal(4, chaveamento.Count);
         }
@@ -45,7 +45,7 @@ namespace CopaFilmes.Tests
 
             var competicao = new Competicao(competidoresOrdemAlfabetica);
             //Act
-            var chaveamento = competicao.CriarChaveamento();
+            var chaveamento = competicao.ObterChaveamento() ;
             
             var filmeChaveado1 = chaveamento[1].Competidor1;
             var filmeChaveado8 = chaveamento[1].Competidor2;

@@ -15,7 +15,6 @@ namespace CopaFilmes.WebApi.Services
                 select new Filme(filme.Id, filme.Titulo, filme.Ano, filme.Nota);
             
             var competicao = new Competicao(filmes);
-            competicao.CriarChaveamento();
             competicao.DisputarCompeticao();
             var resultado = competicao.ObterCampeaoEVice();
 
@@ -44,7 +43,7 @@ namespace CopaFilmes.WebApi.Services
             return new Dictionary<string, FilmeDto>()
             {
                 {"campeao", campeao},
-                {"vice", vice}
+                {"viceCampeao", vice}
             };
         }
     }

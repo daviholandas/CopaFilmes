@@ -1,2 +1,32 @@
-<h1>{{(resultadoCompeticao$ | async)?.campeao.titulo }}</h1>
-<h1>{{(resultadoCompeticao$ | async)?. viceCampeao.titulo }}</h1>
+<div class="jumbotron mt-3">
+    <div class="text-center">
+        <h5>CAMPEONATO DE FILMES</h5>
+        <h2 class="display-4">Resultado Final</h2>
+        <p>Veja o resultado final do Campeonato de filmes de forma simples e rápida.</p>
+    </div>
+</div>
+
+<div>
+    <div class="card mb-3" style="max-height: 200px;">
+        <div class="row no-gutters">
+          <div id="primeiro" class="col-md-4">
+            <div class="card-body">
+                1
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{(resultadoCompeticao$ | async)?.campeao.titulo}}
+      <div class="card my-2 mx-5">
+        <div class="card-body">
+            {{(resultadoCompeticao$ | async)?.viceCampeao.titulo}}
+        </div>
+      </div>
+</div>

@@ -20,6 +20,7 @@ namespace CopaFilmes.Tests
         public async Task<IEnumerable<Filme>> GerarColecaoDeFilmes(int quantidade)
         {
             var pathArquivo = @"C:\Users\davi_\source\repos\CopaFilmes\tests\CopaFilmes.Tests\Data\filmes.json";
+            
             using (var json = File.OpenRead(pathArquivo))
             {
                 var filmesFetched = await JsonSerializer.DeserializeAsync<IEnumerable<FilmeDto>>(json);

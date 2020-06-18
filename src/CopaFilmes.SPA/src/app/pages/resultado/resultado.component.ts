@@ -5,13 +5,12 @@ import { Store, select } from '@ngrx/store';
 
 @Component({
     selector: 'app-resultado',
-    templateUrl: 'resultado.component.html'
+    templateUrl: 'resultado.component.html',
+    styleUrls: ['resultado.component.css']
 })
 
 export class ResultadoComponent implements OnInit {
     resultadoCompeticao$: Observable<Competicao>;
-
-    competicaoResultado: Competicao;
 
     constructor(private store: Store<{resultado}>) {
         this.resultadoCompeticao$ = this.store.pipe(select('resultado'));
