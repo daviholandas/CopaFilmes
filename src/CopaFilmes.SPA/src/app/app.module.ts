@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
-import { ArletModalComponent } from './components/arlet-modal/arlet-modal.component';
+import { AlertModalComponent } from './components/alert-modal/alert-modal.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     HomeComponent,
     NavbarComponent,
     ResultadoComponent,
-    ArletModalComponent
+    AlertModalComponent
   ],
   imports: [
     CommonModule,

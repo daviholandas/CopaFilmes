@@ -3,9 +3,10 @@ import { Competicao } from './../../interfaces/competicao';
 import { CompeticaoService } from './../../services/competicao.service';
 import { Filme } from './../../interfaces/filme';
 import { FilmeService } from './../../services/filme.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Store } from '@ngrx/store'
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'app-home',
@@ -19,11 +20,15 @@ export class HomeComponent implements OnInit {
     desativarSelecao = false;
     desativarBotaoGerar = true;
     selecionado: boolean;
+    modalRef: BsModalRef
+    mensagem: string
+    @ViewChild('template', {static: true}) template: TemplateRef<any>;
 
     constructor(private filmeService: FilmeService, 
         private competicaoService: CompeticaoService,
         private router: Router,
-        private store: Store<Competicao>) { }
+        private store: Store<Competicao>,
+        private modalService: BsModalService) { }
 
     ngOnInit() {
         this.filmeService.getFilmes()
@@ -37,7 +42,13 @@ export class HomeComponent implements OnInit {
         }else {
             this.filmesSelecionados.splice(index, 1);
         }
-        if (this.filmesSelecionados.length >= 8 )
+        if (this.filmesSelecionados.length > 8 )
+        {
+            this.openModal(this.template); 
+            this.mensagem = "O numero maximo(8) de participantes já foi atigindo."
+            this.filmesSelecionados.pop();
+        }
+        if (this.filmesSelecionados.length == 8 )
         {
             this.desativarBotaoGerar = false;
         }
@@ -51,4 +62,9 @@ export class HomeComponent implements OnInit {
                 this.router.navigate(['resultado']);
             });
     }
+    
+    openModal(template: TemplateRef<any>){
+        this.modalRef = this.modalService.show(template);
+    }
+    
 }

@@ -1,12 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-arlet-modal',
-  templateUrl: './arlet-modal.component.html',
-  styleUrls: ['./arlet-modal.component.css']
+  selector: 'app-alert-modal',
+  templateUrl: './alert-modal.component.html'
 })
-export class ArletModalComponent implements OnInit {
-  @Input() mensagem: string;
+export class AlertModalComponent implements OnInit {
+    @Input() mensagem: string;
   @Input() tipoAlerta = 'warning';
   constructor() { }
 
