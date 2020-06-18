@@ -10,20 +10,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
+import { ArletModalComponent } from './components/arlet-modal/arlet-modal.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavbarComponent,
-    ResultadoComponent
+    ResultadoComponent,
+    ArletModalComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({resultado: competicaoReduce})
+    StoreModule.forRoot({resultado: competicaoReduce}),
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

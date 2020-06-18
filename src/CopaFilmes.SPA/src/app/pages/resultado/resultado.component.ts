@@ -5,8 +5,7 @@ import { Store, select } from '@ngrx/store';
 
 @Component({
     selector: 'app-resultado',
-    templateUrl: 'resultado.component.html',
-    styleUrls: ['resultado.component.css']
+    templateUrl: 'resultado.component.html'
 })
 
 export class ResultadoComponent implements OnInit {
@@ -17,6 +16,5 @@ export class ResultadoComponent implements OnInit {
      }
 
     ngOnInit() {
-        this.resultadoCompeticao$.subscribe(value => console.log(value));
     }
 }

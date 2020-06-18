@@ -41,9 +41,7 @@ export class HomeComponent implements OnInit {
         {
             this.desativarBotaoGerar = false;
         }
-
-
-        console.log(this.filmesSelecionados)
+        
     }
 
     gerarCompeticao(){

@@ -9,24 +9,27 @@
 <div>
     <div class="card mb-3" style="max-height: 200px;">
         <div class="row no-gutters">
-          <div id="primeiro" class="col-md-4">
-            <div class="card-body">
-                1
+            <div class="col-md-1">
+                <img src="../../../assets/imagens/primeiro.jpg" class="img-fluid" alt="...">
             </div>
-          </div>
           <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <div class="card-body pt-5">
+              <h2 class="display-5">{{(resultadoCompeticao$ | async)?.campeao.titulo}}</h2>
             </div>
           </div>
         </div>
       </div>
-    {{(resultadoCompeticao$ | async)?.campeao.titulo}}
-      <div class="card my-2 mx-5">
-        <div class="card-body">
-            {{(resultadoCompeticao$ | async)?.viceCampeao.titulo}}
+
+    <div class="card mb-3" style="max-height: 200px;">
+        <div class="row no-gutters">
+            <div class="col-md-1">
+                <img src="../../../assets/imagens/segundo.jpg" class="img-fluid" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body pt-5">
+                    <h2 class="display-5">{{(resultadoCompeticao$ | async)?.viceCampeao.titulo}}</h2>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
 </div>

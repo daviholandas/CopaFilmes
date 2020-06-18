@@ -1,20 +1,9 @@
-.cardFilmes{
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 1300px;
-    margin: 0 auto;
+@media (min-width: 768px) {
+    .cardFilme{
+        max-width: 305px;
+    }
 }
 
-.cardFilmes > div {
-    flex: 1 1;
-    margin: 10px 0;
+.cardFilme{
+    max-width: 455px;
 }
-
-.painel {
-    display: flex;
-    justify-content: space-between ;
-    max-width: 1400px;
-    margin: auto ;
-    
-}
-
