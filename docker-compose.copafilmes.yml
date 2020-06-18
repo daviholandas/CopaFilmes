@@ -1,0 +1,15 @@
+version: "3"
+services: 
+    webapi:
+        image: daviholandas/copafilmeswebapi:latest
+        container_name: api-copafilmeswebapi
+        ports: 
+            - "5001:80"
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+        
+    webapp:
+        image: daviholandas/copafilmeswepapp:latest
+        container_name: app-spa-copafilmeswebapi
+        ports: 
+            - "4200:80"
